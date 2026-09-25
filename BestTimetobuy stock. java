@@ -1,0 +1,20 @@
+public class BestTimeToBuyStock {
+    public static int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+
+        for (int price : prices) {
+            if (price < minPrice) {
+                minPrice = price; // kotha takkuva price dorikindi
+            } else if (price - minPrice > maxProfit) {
+                maxProfit = price - minPrice; // manchi profit dorikindi
+            }
+        }
+        return maxProfit;
+    }
+
+    public static void main(String[] args) {
+        int[] prices = {7, 1, 5, 3, 6, 4};
+        System.out.println("Max Profit: " + maxProfit(prices)); // Output: 5 (1 lo koni 6 lo ammithe)
+    }
+}
