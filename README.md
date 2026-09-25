@@ -1,2 +1,2 @@
 # Java---mini---projects-
-Java practice problems and DSA problems
+Java practice problems and DSA problems 
