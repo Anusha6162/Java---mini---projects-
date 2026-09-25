@@ -1,0 +1,86 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Task {
+    String title;
+    boolean isDone;
+
+    Task(String title) {
+        this.title = title;
+        this.isDone = false;
+    }
+
+    void display(int index) {
+        String status = isDone ? "[✓ DONE]" : "[ ] PENDING";
+        System.out.println((index+1) + ". " + title + " " + status);
+    }
+}
+
+public class TodoList {
+    static ArrayList<Task> tasks = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int choice;
+        System.out.println("===== MY TO-DO LIST APP =====");
+        do {
+            System.out.println("\n1. Add New Task");
+            System.out.println("2. View All Tasks");
+            System.out.println("3. Mark Task as Done");
+            System.out.println("4. Delete Task");
+            System.out.println("5. Exit");
+            System.out.print("Choose: ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch(choice) {
+                case 1: addTask(); break;
+                case 2: viewTasks(); break;
+                case 3: markDone(); break;
+                case 4: deleteTask(); break;
+                case 5: System.out.println("Bye! Keep Productive!"); break;
+                default: System.out.println("Wrong Choice!");
+            }
+        } while(choice != 5);
+    }
+
+    static void addTask() {
+        System.out.print("Enter Task: ");
+        String t = sc.nextLine();
+        tasks.add(new Task(t));
+        System.out.println(">>> Task Added!");
+    }
+
+    static void viewTasks() {
+        if(tasks.isEmpty()) {
+            System.out.println("No Tasks Yet! Add something.");
+        } else {
+            System.out.println("\n--- Your Tasks ---");
+            for(int i=0; i<tasks.size(); i++) tasks.get(i).display(i);
+        }
+    }
+
+    static void markDone() {
+        viewTasks();
+        if(!tasks.isEmpty()){
+            System.out.print("Enter task number to mark DONE: ");
+            int n = sc.nextInt();
+            if(n > 0 && n <= tasks.size()){
+                tasks.get(n-1).isDone = true;
+                System.out.println(">>> Great! Task Completed!");
+            } else System.out.println("Invalid Number!");
+        }
+    }
+
+    static void deleteTask() {
+        viewTasks();
+        if(!tasks.isEmpty()){
+            System.out.print("Enter task number to Delete: ");
+            int n = sc.nextInt();
+            if(n > 0 && n <= tasks.size()){
+                tasks.remove(n-1);
+                System.out.println(">>> Task Deleted!");
+            } else System.out.println("Invalid Number!");
+        }
+    }
+}
