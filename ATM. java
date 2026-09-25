@@ -1,0 +1,93 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Account {
+    private int pin = 1234;
+    private double balance = 50000;
+    private ArrayList<String> history = new ArrayList<>();
+
+    public boolean validatePin(int enteredPin) {
+        return pin == enteredPin;
+    }
+
+    public void checkBalance() {
+        System.out.println("\n>>> Current Balance: Rs. " + balance);
+        history.add("Checked Balance: " + balance);
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println(">>> Rs." + amount + " Deposited Successfully!");
+            history.add("Deposited: Rs." + amount);
+        } else {
+            System.out.println("Invalid Amount!");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println(">>> Rs." + amount + " Withdrawn. Please Collect Cash!");
+            history.add("Withdrawn: Rs." + amount);
+        } else {
+            System.out.println(">>> Insufficient Balance or Invalid Amount!");
+        }
+    }
+
+    public void showHistory() {
+        System.out.println("\n--- Mini Statement ---");
+        if (history.isEmpty()) {
+            System.out.println("No Transactions Yet.");
+        } else {
+            for (String t : history) {
+                System.out.println(t);
+            }
+        }
+        System.out.println("----------------------");
+    }
+}
+
+public class ATM {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Account acc = new Account();
+        
+        System.out.println("===== WELCOME TO SBI ATM =====");
+        System.out.print("Enter Your 4-Digit PIN: ");
+        int enteredPin = sc.nextInt();
+
+        if (!acc.validatePin(enteredPin)) {
+            System.out.println(">>> WRONG PIN! Access Denied.");
+            return;
+        }
+
+        int choice;
+        do {
+            System.out.println("\n1. Check Balance");
+            System.out.println("2. Deposit Money");
+            System.out.println("3. Withdraw Money");
+            System.out.println("4. Mini Statement");
+            System.out.println("5. Exit");
+            System.out.print("Choose Option: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1: acc.checkBalance(); break;
+                case 2:
+                    System.out.print("Enter Deposit Amount: ");
+                    acc.deposit(sc.nextDouble());
+                    break;
+                case 3:
+                    System.out.print("Enter Withdraw Amount: ");
+                    acc.withdraw(sc.nextDouble());
+                    break;
+                case 4: acc.showHistory(); break;
+                case 5: System.out.println("Thank You! Visit Again."); break;
+                default: System.out.println("Invalid Choice!");
+            }
+        } while (choice != 5);
+        
+        sc.close();
+    }
+}
